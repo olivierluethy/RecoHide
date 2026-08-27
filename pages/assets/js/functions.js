@@ -179,22 +179,27 @@ $( document ).ready(function() {
 
     $('.slider--prev, .slider--next').click(function() {
 
-      var $this = $(this),
-          curLeft = $('.slider').find('.slider--item-left'),
-          curLeftPos = $('.slider').children().index(curLeft),
-          curCenter = $('.slider').find('.slider--item-center'),
-          curCenterPos = $('.slider').children().index(curCenter),
-          curRight = $('.slider').find('.slider--item-right'),
-          curRightPos = $('.slider').children().index(curRight),
-          totalWorks = $('.slider').children().length,
+      var $slider = $('.slider');
+      // Guard against overlapping animations from rapid clicks (smoother feel).
+      if ($slider.is(':animated')) return;
+      var $this = $(this);
+
+      // Fade out, swap the classes in the completion callback (instead of a
+      // parallel setTimeout that only lined up by a magic 400ms), then fade
+      // back in. This keeps the text swap perfectly aligned with opacity 0.
+      $slider.stop(true).fadeTo(300, 0, function(){
+
+      var curLeft = $slider.find('.slider--item-left'),
+          curLeftPos = $slider.children().index(curLeft),
+          curCenter = $slider.find('.slider--item-center'),
+          curCenterPos = $slider.children().index(curCenter),
+          curRight = $slider.find('.slider--item-right'),
+          curRightPos = $slider.children().index(curRight),
+          totalWorks = $slider.children().length,
           $left = $('.slider--item-left'),
           $center = $('.slider--item-center'),
           $right = $('.slider--item-right'),
           $item = $('.slider--item');
-
-      $('.slider').animate({ opacity : 0 }, 400);
-
-      setTimeout(function(){
 
       if ($this.hasClass('slider--next')) {
         if (curLeftPos < totalWorks - 1 && curCenterPos < totalWorks - 1 && curRightPos < totalWorks - 1) {
@@ -245,9 +250,9 @@ $( document ).ready(function() {
         }
       }
 
-    }, 400);
+      $slider.fadeTo(300, 1);
 
-    $('.slider').animate({ opacity : 1 }, 400);
+      });
 
     });
 

@@ -835,6 +835,7 @@ body {
   position: absolute;
   display: none;
   text-align: center;
+  transition: transform 0.35s ease, top 0.35s ease, left 0.35s ease, right 0.35s ease, opacity 0.35s ease;
 }
 .work--lockup .slider--item a {
   text-decoration: none;
@@ -857,6 +858,7 @@ body {
   margin: 0 auto;
   border-radius: 50%;
   overflow: hidden;
+  transition: width 0.35s ease, height 0.35s ease;
 }
 .work--lockup .slider--item-image img {
   width: 100%;
